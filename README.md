@@ -9,8 +9,6 @@ Complete Next.js 15 application with MySQL database for managing real estate pro
 - **Logistics Operations**: Create and monitor logistics requests
 - **Admin Dashboard**: Complete management interface for administrators
 - **Client Dashboard**: User-friendly interface for customers
-- **Authentication**: Secure JWT-based authentication system
-- **Role-Based Access**: Different permissions for admins and users
 
 ## Tech Stack
 
@@ -19,7 +17,6 @@ Complete Next.js 15 application with MySQL database for managing real estate pro
 - **Database**: MySQL with Prisma ORM
 - **Styling**: Tailwind CSS
 - **UI Components**: shadcn/ui
-- **Authentication**: JWT (JSON Web Tokens)
 - **Maps**: Mapbox integration
 
 ## Prerequisites
@@ -52,8 +49,6 @@ cp .env.example .env
 ```
 
 Update the following variables:
-- `DATABASE_URL`: Your MySQL connection string
-- `JWT_SECRET`: A secure random string for JWT signing
 - `NEXT_PUBLIC_MAPBOX_TOKEN`: Your Mapbox API token
 
 ### 4. Set up the database
@@ -92,20 +87,13 @@ mvp-site/
 ├── components/            # React components
 │   └── ui/               # shadcn/ui components
 ├── lib/                   # Utility functions
-│   ├── auth.ts           # Authentication utilities
-│   ├── db.ts             # Prisma client
-│   ├── middleware.ts     # API middleware
+│   ├── utils.ts          # Helper utilities
 │   └── ...
 ├── prisma/               # Prisma schema
 └── scripts/              # Database scripts
 ```
 
 ## API Endpoints
-
-### Authentication
-- `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - Login user
-- `GET /api/auth/me` - Get current user
 
 ### Properties
 - `GET /api/properties` - List properties
@@ -123,14 +111,6 @@ mvp-site/
 - `GET /api/logistics` - List logistics requests
 - `POST /api/logistics` - Create logistics request
 - `PUT /api/logistics/[id]` - Update logistics request
-
-## Default Admin Account
-
-After running the database initialization:
-- Email: admin@example.com
-- Password: admin123
-
-**Important**: Change this password immediately in production!
 
 ## Scripts
 
