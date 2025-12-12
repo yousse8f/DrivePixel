@@ -28,16 +28,16 @@ export default function ContactPage() {
                 <div className="container-custom">
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
                         {/* Contact Info Cards */}
-                        <div className="bg-gradient-to-br from-primary-100 to-gray-50 rounded-xl p-8">
+                        <a href="mailto:Info@OneDriveRealty.com" className="bg-gradient-to-br from-primary-100 to-gray-50 rounded-xl p-8 hover:shadow-lg transition-all duration-300 transform hover:scale-105">
                             <Mail className="h-12 w-12 text-primary-500 mb-4" />
                             <h3 className="text-xl font-bold text-primary-900 mb-2">Email</h3>
-                            <p className="text-gray-700">support@drivepixel.com</p>
-                        </div>
-                        <div className="bg-gradient-to-br from-primary-100 to-gray-50 rounded-xl p-8">
+                            <p className="text-gray-700 hover:text-cta transition-colors">Info@OneDriveRealty.com</p>
+                        </a>
+                        <a href="tel:+12067887190" className="bg-gradient-to-br from-primary-100 to-gray-50 rounded-xl p-8 hover:shadow-lg transition-all duration-300 transform hover:scale-105">
                             <Phone className="h-12 w-12 text-primary-500 mb-4" />
                             <h3 className="text-xl font-bold text-primary-900 mb-2">Phone</h3>
-                            <p className="text-gray-700">+91 9971 392828</p>
-                        </div>
+                            <p className="text-gray-700 hover:text-cta transition-colors">+1-206-788-7190</p>
+                        </a>
                         <div className="bg-gradient-to-br from-primary-100 to-gray-50 rounded-xl p-8">
                             <MapPin className="h-12 w-12 text-primary-500 mb-4" />
                             <h3 className="text-xl font-bold text-primary-900 mb-2">Address</h3>
@@ -71,7 +71,7 @@ export default function ContactPage() {
                                 <label className="block text-sm font-semibold text-primary-900 mb-2">Message *</label>
                                 <textarea rows={6} placeholder="Tell us about your project..." className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-500"></textarea>
                             </div>
-                            <Button size="lg" className="w-full bg-primary-500 hover:bg-primary-600">
+                            <Button size="lg" className="w-full bg-cta hover:bg-cta-600 text-white">
                                 Send Message
                                 <ArrowRight className="ml-2 h-5 w-5" />
                             </Button>

@@ -36,7 +36,7 @@ export default function AboutPage() {
                                 Our team combines technical expertise with strategic thinking to deliver solutions that not only meet today's needs but anticipate tomorrow's challenges.
                             </p>
                             <Link href="/contact">
-                                <Button className="bg-primary-500 hover:bg-primary-600">
+                                <Button className="bg-cta hover:bg-cta-600 text-white">
                                     Get in Touch
                                     <ArrowRight className="ml-2 h-4 w-4" />
                                 </Button>
@@ -142,7 +142,7 @@ export default function AboutPage() {
                         Let's discuss how we can help transform your business with innovative digital solutions.
                     </p>
                     <Link href="/contact">
-                        <Button size="lg" className="bg-primary-500 hover:bg-primary-600 text-white font-semibold">
+                        <Button size="lg" className="bg-cta hover:bg-cta-600 text-white font-semibold">
                             Get a Free Consultation
                             <ArrowRight className="ml-2 h-5 w-5" />
                         </Button>

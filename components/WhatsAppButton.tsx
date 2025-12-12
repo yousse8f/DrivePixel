@@ -17,14 +17,14 @@ export default function WhatsAppButton() {
     return (
         <div className="fixed bottom-6 right-6 z-40 flex flex-col items-center gap-2">
             {/* Call Now Label */}
-            <div className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow-lg whitespace-nowrap animate-pulse">
+            <div className="bg-cta text-white px-4 py-2 rounded-lg font-semibold text-sm shadow-lg whitespace-nowrap animate-pulse">
                 Call Now
             </div>
             
             {/* Call Button */}
             <button
                 onClick={handleCallClick}
-                className="bg-blue-600 hover:bg-blue-700 text-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110"
+                className="bg-cta hover:bg-cta-600 text-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110"
                 aria-label="Call us"
                 title="Click to call"
             >

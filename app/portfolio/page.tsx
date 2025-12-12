@@ -6,42 +6,36 @@ import { Button } from '@/components/ui/button';
 import Navbar from '@/components/Navbar';
 import TopBar from '@/components/TopBar';
 import Footer from '@/components/Footer';
+import { useEffect, useState } from 'react';
+import { publicApiClient } from '@/lib/public-api-client';
 
 export default function PortfolioPage() {
-    const projects = [
-        {
-            id: 1,
-            title: 'Smart Booking Platform',
-            category: 'SaaS',
-            description: 'Modern booking engine with real-time availability, secure payments, and optimized dashboard.',
-            techStack: ['React.js', 'Node.js', 'PostgreSQL', 'AWS'],
-            results: '40% increase in bookings'
-        },
-        {
-            id: 2,
-            title: 'AI Workflow Automation',
-            category: 'Enterprise',
-            description: 'Automated data processing system powered by machine learning, reducing manual tasks significantly.',
-            techStack: ['Python', 'TensorFlow', 'FastAPI', 'AWS'],
-            results: '60% reduction in manual work'
-        },
-        {
-            id: 3,
-            title: 'E-Commerce PWA',
-            category: 'Retail',
-            description: 'Lightning-fast shopping experience with modern UI and high conversion performance.',
-            techStack: ['Next.js', 'Stripe', 'MongoDB', 'Vercel'],
-            results: '35% higher conversion rate'
-        },
-        {
-            id: 4,
-            title: 'Healthcare Management System',
-            category: 'Healthcare',
-            description: 'Comprehensive patient management and appointment scheduling system.',
-            techStack: ['React', 'Node.js', 'PostgreSQL', 'Azure'],
-            results: '50% faster patient processing'
+    const [projects, setProjects] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        loadPortfolio();
+    }, []);
+
+    const loadPortfolio = async () => {
+        try {
+            const response = await publicApiClient.getPortfolio();
+            if (response.success && response.data) {
+                setProjects(response.data.map((item: any) => ({
+                    id: item.id,
+                    title: item.title,
+                    category: item.category,
+                    description: item.description,
+                    techStack: item.tech_stack || [],
+                    results: item.results,
+                })));
+            }
+        } catch (error) {
+            console.error('Failed to load portfolio:', error);
+        } finally {
+            setLoading(false);
         }
-    ];
+    };
 
     const categories = ['All', 'SaaS', 'Enterprise', 'Retail', 'Healthcare'];
 
@@ -80,43 +74,49 @@ export default function PortfolioPage() {
             {/* Projects Grid */}
             <section className="py-16 bg-white">
                 <div className="container-custom">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {projects.map((project) => (
-                            <div key={project.id} className="bg-gradient-to-br from-primary-100 to-gray-50 rounded-xl overflow-hidden hover:shadow-lg transition-all">
-                                <div className="p-8">
-                                    <div className="flex items-start justify-between mb-4">
-                                        <div>
-                                            <h3 className="text-2xl font-bold text-primary-900 mb-2">{project.title}</h3>
-                                            <span className="inline-block bg-primary-300 text-primary-900 px-3 py-1 rounded-full text-sm font-semibold">
-                                                {project.category}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <p className="text-gray-700 mb-4">{project.description}</p>
-                                    <div className="mb-4">
-                                        <p className="text-sm font-semibold text-primary-900 mb-2">Tech Stack:</p>
-                                        <div className="flex flex-wrap gap-2">
-                                            {project.techStack.map((tech) => (
-                                                <span key={tech} className="bg-white px-3 py-1 rounded text-sm text-gray-700 border border-gray-300">
-                                                    {tech}
+                    {loading ? (
+                        <div className="text-center py-8">Loading portfolio...</div>
+                    ) : projects.length > 0 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            {projects.map((project) => (
+                                <div key={project.id} className="bg-gradient-to-br from-primary-100 to-gray-50 rounded-xl overflow-hidden hover:shadow-lg transition-all">
+                                    <div className="p-8">
+                                        <div className="flex items-start justify-between mb-4">
+                                            <div>
+                                                <h3 className="text-2xl font-bold text-primary-900 mb-2">{project.title}</h3>
+                                                <span className="inline-block bg-primary-300 text-primary-900 px-3 py-1 rounded-full text-sm font-semibold">
+                                                    {project.category}
                                                 </span>
-                                            ))}
+                                            </div>
                                         </div>
+                                        <p className="text-gray-700 mb-4">{project.description}</p>
+                                        <div className="mb-4">
+                                            <p className="text-sm font-semibold text-primary-900 mb-2">Tech Stack:</p>
+                                            <div className="flex flex-wrap gap-2">
+                                                {project.techStack.map((tech: string) => (
+                                                    <span key={tech} className="bg-white px-3 py-1 rounded text-sm text-gray-700 border border-gray-300">
+                                                        {tech}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div className="bg-white rounded-lg p-4 mb-4">
+                                            <p className="text-sm text-gray-600">Key Result</p>
+                                            <p className="text-lg font-bold text-primary-500">{project.results}</p>
+                                        </div>
+                                        <Link href="/contact">
+                                            <Button variant="outline" className="w-full border-primary-500 text-primary-500 hover:bg-primary-50">
+                                                View Details
+                                                <ArrowRight className="ml-2 h-4 w-4" />
+                                            </Button>
+                                        </Link>
                                     </div>
-                                    <div className="bg-white rounded-lg p-4 mb-4">
-                                        <p className="text-sm text-gray-600">Key Result</p>
-                                        <p className="text-lg font-bold text-primary-500">{project.results}</p>
-                                    </div>
-                                    <Link href="/contact">
-                                        <Button variant="outline" className="w-full border-primary-500 text-primary-500 hover:bg-primary-50">
-                                            View Details
-                                            <ArrowRight className="ml-2 h-4 w-4" />
-                                        </Button>
-                                    </Link>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="text-center py-8 text-gray-500">No portfolio items available</div>
+                    )}
                 </div>
             </section>
 

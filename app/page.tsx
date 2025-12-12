@@ -14,6 +14,7 @@ import Navbar from '@/components/Navbar';
 import TopBar from '@/components/TopBar';
 import Footer from '@/components/Footer';
 import { useRef, useState, useEffect } from 'react';
+import { publicApiClient } from '@/lib/public-api-client';
 
 // Add CSS animations for page flip effect
 const flipAnimationStyle = `
@@ -47,7 +48,7 @@ const flipAnimationStyle = `
   }
 
   .color-wave {
-    background: linear-gradient(90deg, #ffffff, #4a7ba7, #2d5a8c, #ffffff);
+    background: linear-gradient(90deg, #ffffff, #5a6ea0, #3a4b73, #ffffff);
     background-size: 200% auto;
     animation: colorWave 1.5s ease-in-out;
     -webkit-background-clip: text;
@@ -60,41 +61,60 @@ export default function HomePage() {
     const videoRef = useRef<HTMLVideoElement>(null);
     const [currentTestimonial, setCurrentTestimonial] = useState(0);
     const [currentHeroText, setCurrentHeroText] = useState(0);
-
-    const heroTexts = [
+    const [heroTexts, setHeroTexts] = useState([
         {
             title: 'Build Future-Ready Platforms',
             subtitle: 'We create smart applications, AI-powered tools, and seamless cloud infrastructure that help brands grow faster.'
         },
-    ];
-
-    // Client testimonials with ratings and feedback
-    const testimonials = [
+    ]);
+    const [testimonials, setTestimonials] = useState([
         {
             name: 'CEO, Digital Venture',
             email: 'digital-venture.com',
-            rating: 5, // 5-star rating for excellent service
+            rating: 5,
             text: '"DrivePixel delivered a flawless system that scaled our operations instantly. Their technical expertise and attention to detail made all the difference in our success."',
         },
-        {
-            name: 'CTO, Tech Innovation Labs',
-            email: 'techinnovation.com',
-            rating: 5, // Outstanding performance and reliability
-            text: '"The cloud infrastructure DrivePixel built for us is rock-solid and incredibly scalable. They understood our complex requirements and delivered beyond expectations. Highly recommended!"',
-        },
-        {
-            name: 'Founder, E-Commerce Solutions',
-            email: 'ecommerce-solutions.com',
-            rating: 5, // Exceptional service and support
-            text: '"DrivePixel transformed our entire digital presence. From web development to AI automation, their team demonstrated exceptional expertise. Our conversion rates increased by 40% within months."',
-        },
-        {
-            name: 'Product Manager, SaaS Startup',
-            email: 'saas-startup.com',
-            rating: 5, // Reliable and innovative solutions
-            text: '"DrivePixel didn\'t just build our platform—they became an extension of our team. Their proactive approach to problem-solving and continuous optimization has been invaluable to our growth."',
-        },
-    ];
+    ]);
+    const [services, setServices] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        loadContent();
+    }, []);
+
+    const loadContent = async () => {
+        try {
+            const [heroRes, testimonialsRes, servicesRes] = await Promise.all([
+                publicApiClient.getHeroTexts() as Promise<{ success: boolean; data: any[] }>,
+                publicApiClient.getTestimonials() as Promise<{ success: boolean; data: any[] }>,
+                publicApiClient.getServices() as Promise<{ success: boolean; data: any[] }>,
+            ]);
+
+            if (heroRes.success && heroRes.data && heroRes.data.length > 0) {
+                setHeroTexts(heroRes.data.map((ht: any) => ({
+                    title: ht.title,
+                    subtitle: ht.subtitle,
+                })));
+            }
+
+            if (testimonialsRes.success && testimonialsRes.data && testimonialsRes.data.length > 0) {
+                setTestimonials(testimonialsRes.data.map((t: any) => ({
+                    name: t.name,
+                    email: t.email,
+                    rating: t.rating,
+                    text: t.text,
+                })));
+            }
+
+            if (servicesRes.success && servicesRes.data) {
+                setServices(servicesRes.data as any[]);
+            }
+        } catch (error) {
+            console.error('Failed to load content:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const handleMouseEnter = () => {
         if (videoRef.current) {
@@ -184,7 +204,7 @@ export default function HomePage() {
                         </div>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <Link href="/contact">
-                                <Button size="lg" variant="secondary" className="w-full sm:w-auto transition-all duration-300 transform hover:scale-105">
+                                <Button size="lg" className="w-full sm:w-auto bg-cta hover:bg-cta-600 text-white transition-all duration-300 transform hover:scale-105">
                                     Get a Free Consultation
                                     <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                                 </Button>
@@ -215,41 +235,21 @@ export default function HomePage() {
 
                     {/* Services Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {/* Web & Mobile Development */}
-                        <div className="bg-gradient-to-br from-primary-100 to-gray-50 rounded-xl p-8 hover:shadow-lg transition-all">
-                            <div className="text-4xl mb-4">🌐</div>
-                            <h3 className="text-xl font-bold text-primary-900 mb-3">Web & Mobile Development</h3>
-                            <p className="text-gray-700 text-sm leading-relaxed">
-                                Build fast, secure, and scalable digital products—from custom web apps to modern mobile experiences—designed for performance and long-term growth.
-                            </p>
-                        </div>
-
-                        {/* Cloud & Infrastructure */}
-                        <div className="bg-gradient-to-br from-primary-100 to-gray-50 rounded-xl p-8 hover:shadow-lg transition-all">
-                            <div className="text-4xl mb-4">☁️</div>
-                            <h3 className="text-xl font-bold text-primary-900 mb-3">Cloud & Infrastructure</h3>
-                            <p className="text-gray-700 text-sm leading-relaxed">
-                                Optimize your operations with robust cloud architecture, DevOps automation, and secure infrastructure built to handle scale.
-                            </p>
-                        </div>
-
-                        {/* AI & Automation */}
-                        <div className="bg-gradient-to-br from-primary-100 to-gray-50 rounded-xl p-8 hover:shadow-lg transition-all">
-                            <div className="text-4xl mb-4">🤖</div>
-                            <h3 className="text-xl font-bold text-primary-900 mb-3">AI & Automation</h3>
-                            <p className="text-gray-700 text-sm leading-relaxed">
-                                Transform workflows with intelligent automation, machine learning models, and AI-driven tools that improve accuracy and reduce manual work.
-                            </p>
-                        </div>
-
-                        {/* IT Advisory & Consulting */}
-                        <div className="bg-gradient-to-br from-primary-100 to-gray-50 rounded-xl p-8 hover:shadow-lg transition-all">
-                            <div className="text-4xl mb-4">💼</div>
-                            <h3 className="text-xl font-bold text-primary-900 mb-3">IT Advisory & Consulting</h3>
-                            <p className="text-gray-700 text-sm leading-relaxed">
-                                Make smart technology decisions with expert guidance, solution design, system reviews, and digital transformation planning.
-                            </p>
-                        </div>
+                        {loading ? (
+                            <div className="col-span-4 text-center py-8">Loading services...</div>
+                        ) : services.length > 0 ? (
+                            services.map((service) => (
+                                <div key={service.id} className="bg-gradient-to-br from-primary-100 to-gray-50 rounded-xl p-8 hover:shadow-lg transition-all">
+                                    <div className="text-4xl mb-4">{service.icon}</div>
+                                    <h3 className="text-xl font-bold text-primary-900 mb-3">{service.title}</h3>
+                                    <p className="text-gray-700 text-sm leading-relaxed">
+                                        {service.description}
+                                    </p>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="col-span-4 text-center py-8 text-gray-500">No services available</div>
+                        )}
                     </div>
                 </div>
             </section>
@@ -438,7 +438,7 @@ export default function HomePage() {
                                 {/* Stars */}
                                 <div className="flex gap-2 justify-center mb-8">
                                     {[...Array(testimonials[currentTestimonial].rating)].map((_, i) => (
-                                        <Star key={i} className="h-6 w-6 fill-yellow-400 text-yellow-400 drop-shadow-lg" />
+                                        <Star key={i} className="h-6 w-6 fill-highlight text-highlight drop-shadow-lg" />
                                     ))}
                                 </div>
 
@@ -487,7 +487,7 @@ export default function HomePage() {
                     </p>
                     <div className="flex flex-col sm:flex-row gap-6 justify-center">
                         <Link href="/contact">
-                            <Button size="lg" className="bg-primary-500 hover:bg-primary-600 text-white font-semibold transition-all duration-300 transform hover:scale-105 px-8">
+                            <Button size="lg" className="bg-cta hover:bg-cta-600 text-white font-semibold transition-all duration-300 transform hover:scale-105 px-8">
                                 Get a Free Consultation
                                 <ArrowRight className="ml-2 h-5 w-5" />
                             </Button>

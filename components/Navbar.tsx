@@ -161,7 +161,7 @@ export default function Navbar({ darkBg = false }: NavbarProps) {
                             Contact
                         </Link>
                         <Link href="mailto:support@drivepixel.com">
-                            <Button className="bg-primary-500 hover:bg-primary-600 text-white flex items-center gap-2 px-6 py-2.5 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95">
+                            <Button className="bg-cta hover:bg-cta-600 text-white flex items-center gap-2 px-6 py-2.5 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95">
                                 <Mail className="h-5 w-5" />
                                 Email Us
                             </Button>

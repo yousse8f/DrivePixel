@@ -6,38 +6,29 @@ import { Button } from '@/components/ui/button';
 import Navbar from '@/components/Navbar';
 import TopBar from '@/components/TopBar';
 import Footer from '@/components/Footer';
+import { useEffect, useState } from 'react';
+import { publicApiClient } from '@/lib/public-api-client';
 
 export default function ServicesPage() {
-    const services = [
-        {
-            id: 'web-mobile',
-            title: 'Web & Mobile App Development',
-            icon: '🌐',
-            items: ['Custom Web Apps', 'Mobile Apps (iOS / Android)', 'Cross-platform solutions', 'UI/UX Design', 'Maintenance'],
-            description: 'Build fast, secure, and scalable digital products designed for performance and long-term growth.'
-        },
-        {
-            id: 'cloud',
-            title: 'Cloud & Infrastructure Solutions',
-            icon: '☁️',
-            items: ['Cloud Migration', 'DevOps Services', 'Server Management', 'Cloud Security', 'Infrastructure Automation'],
-            description: 'Optimize your operations with robust cloud architecture and secure infrastructure built to handle scale.'
-        },
-        {
-            id: 'ai',
-            title: 'AI & Automation Services',
-            icon: '🤖',
-            items: ['AI-powered Applications', 'Chatbots & Virtual Assistants', 'Automation Solutions', 'Data Analytics', 'Machine Learning Models'],
-            description: 'Transform workflows with intelligent automation and AI-driven tools that improve accuracy and reduce manual work.'
-        },
-        {
-            id: 'advisory',
-            title: 'IT Advisory & Consulting',
-            icon: '💼',
-            items: ['System Architecture Planning', 'Digital Transformation', 'Technology Roadmaps', 'IT Audits', 'Enterprise Solutions'],
-            description: 'Make smart technology decisions with expert guidance, solution design, and digital transformation planning.'
+    const [services, setServices] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        loadServices();
+    }, []);
+
+    const loadServices = async () => {
+        try {
+            const response = await publicApiClient.getServices();
+            if (response.success && response.data) {
+                setServices(response.data);
+            }
+        } catch (error) {
+            console.error('Failed to load services:', error);
+        } finally {
+            setLoading(false);
         }
-    ];
+    };
 
     return (
         <div className="min-h-screen flex flex-col">
@@ -57,14 +48,17 @@ export default function ServicesPage() {
             {/* Services Grid */}
             <section className="py-16 bg-white">
                 <div className="container-custom">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {services.map((service) => (
+                    {loading ? (
+                        <div className="text-center py-8">Loading services...</div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            {services.map((service) => (
                             <div key={service.id} className="bg-gradient-to-br from-primary-100 to-gray-50 rounded-xl p-8 hover:shadow-lg transition-all">
                                 <div className="text-5xl mb-4">{service.icon}</div>
                                 <h3 className="text-2xl font-bold text-primary-900 mb-3">{service.title}</h3>
                                 <p className="text-gray-700 mb-6 leading-relaxed">{service.description}</p>
                                 <ul className="space-y-2 mb-6">
-                                    {service.items.map((item, index) => (
+                                    {(service.items || []).map((item: string, index: number) => (
                                         <li key={index} className="flex items-start gap-3">
                                             <CheckCircle className="h-5 w-5 text-primary-500 flex-shrink-0 mt-0.5" />
                                             <span className="text-gray-700">{item}</span>
@@ -78,8 +72,9 @@ export default function ServicesPage() {
                                     </Button>
                                 </Link>
                             </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </section>
 
@@ -130,7 +125,7 @@ export default function ServicesPage() {
                         Let's discuss how our services can help you achieve your digital goals.
                     </p>
                     <Link href="/contact">
-                        <Button size="lg" className="bg-primary-500 hover:bg-primary-600">
+                        <Button size="lg" className="bg-cta hover:bg-cta-600 text-white">
                             Get a Free Consultation
                             <ArrowRight className="ml-2 h-5 w-5" />
                         </Button>

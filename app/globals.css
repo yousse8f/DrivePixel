@@ -4,48 +4,96 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* New Optimized Conversion-Focused Color Palette */
+    --background: 0 0% 100%; /* Cloud Dancer White */
+    --foreground: 220 36% 19%; /* Deep Blue - main text */
+    --card: 0 0% 100%; /* Cloud Dancer White */
+    --card-foreground: 220 36% 19%; /* Deep Blue */
+    --popover: 0 0% 100%; /* Cloud Dancer White */
+    --popover-foreground: 220 36% 19%; /* Deep Blue */
+    
+    /* Primary Colors - Deep Blue Palette */
+    --primary: 224 28% 50%; /* Waikawa Gray - primary UI elements */
+    --primary-foreground: 0 0% 100%; /* White text on primary */
+    
+    /* Secondary Colors - Slate Blue */
+    --secondary: 221 32% 34%; /* Slate Blue - secondary backgrounds */
+    --secondary-foreground: 0 0% 100%; /* White text on secondary */
+    
+    /* Muted/Neutral Colors */
+    --muted: 208 40% 79%; /* Modern Teal - light backgrounds */
+    --muted-foreground: 220 36% 19%; /* Deep Blue text */
+    
+    /* Accent Colors */
+    --accent: 224 28% 50%; /* Waikawa Gray - accent elements */
+    --accent-foreground: 0 0% 100%; /* White text on accent */
+    
+    /* CTA - Bright Coral */
+    --cta: 6 100% 70%; /* Bright Coral - main CTA buttons */
+    --cta-foreground: 0 0% 100%; /* White text on CTA */
+    
+    /* Highlight - Gold */
+    --highlight: 51 100% 50%; /* Gold - accents and highlights */
+    --highlight-foreground: 220 36% 19%; /* Deep Blue text on gold */
+    
+    /* Premium - Royal Purple */
+    --premium: 273 20% 58%; /* Royal Purple - special sections */
+    --premium-foreground: 0 0% 100%; /* White text on premium */
+    
+    /* Success - Green */
+    --success: 145 63% 42%; /* Green Accent - success indicators */
+    --success-foreground: 0 0% 100%; /* White text on success */
+    
+    /* Destructive */
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Borders and Inputs */
+    --border: 224 28% 50%; /* Waikawa Gray - borders */
+    --input: 208 40% 79%; /* Modern Teal - input borders */
+    --ring: 224 28% 50%; /* Waikawa Gray - focus rings */
+    
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --background: 220 36% 19%; /* Deep Blue - dark background */
+    --foreground: 0 0% 100%; /* White text */
+    --card: 221 32% 34%; /* Slate Blue - dark cards */
+    --card-foreground: 0 0% 100%; /* White text */
+    --popover: 221 32% 34%; /* Slate Blue */
+    --popover-foreground: 0 0% 100%; /* White text */
+    
+    --primary: 224 28% 50%; /* Waikawa Gray */
+    --primary-foreground: 0 0% 100%; /* White text */
+    
+    --secondary: 221 32% 34%; /* Slate Blue */
+    --secondary-foreground: 0 0% 100%; /* White text */
+    
+    --muted: 221 32% 34%; /* Slate Blue */
+    --muted-foreground: 208 40% 79%; /* Modern Teal text */
+    
+    --accent: 224 28% 50%; /* Waikawa Gray */
+    --accent-foreground: 0 0% 100%; /* White text */
+    
+    --cta: 6 100% 70%; /* Bright Coral */
+    --cta-foreground: 0 0% 100%; /* White text */
+    
+    --highlight: 51 100% 50%; /* Gold */
+    --highlight-foreground: 220 36% 19%; /* Deep Blue text */
+    
+    --premium: 273 20% 58%; /* Royal Purple */
+    --premium-foreground: 0 0% 100%; /* White text */
+    
+    --success: 145 63% 42%; /* Green */
+    --success-foreground: 0 0% 100%; /* White text */
+    
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 224 28% 50%; /* Waikawa Gray */
+    --input: 224 28% 50%; /* Waikawa Gray */
+    --ring: 224 28% 50%; /* Waikawa Gray */
   }
 }
 

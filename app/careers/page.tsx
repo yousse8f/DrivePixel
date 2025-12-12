@@ -128,7 +128,7 @@ export default function CareersPage() {
                                         </div>
                                     </div>
                                     <Link href="/contact">
-                                        <Button className="bg-primary-500 hover:bg-primary-600 text-white font-bold transition-all duration-300 hover:shadow-lg px-8 py-2.5 whitespace-nowrap">
+                                        <Button className="bg-cta hover:bg-cta-600 text-white font-bold transition-all duration-300 hover:shadow-lg px-8 py-2.5 whitespace-nowrap">
                                             Apply Now
                                             <ArrowRight className="ml-2 h-4 w-4" />
                                         </Button>
